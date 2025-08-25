@@ -2,6 +2,13 @@
 Unit tests for emotion_detector covering five canonical statements and dominant emotions.
 """
 
+import os
+import sys
+
+# Add the repo root to Python path - go up two levels from this file
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, REPO_ROOT)
+
 import unittest
 from EmotionDetection import emotion_detector
 
@@ -32,4 +39,3 @@ class TestEmotionDetection(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

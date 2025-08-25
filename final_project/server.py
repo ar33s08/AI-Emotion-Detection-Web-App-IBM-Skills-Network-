@@ -4,11 +4,21 @@ Serves the provided index.html and exposes /emotionDetector.
 """
 
 from __future__ import annotations
+import os
+import sys
+
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if REPO_ROOT not in sys.path:
+    sys.path.insert(0, REPO_ROOT)
+
 from typing import Any, Dict
 from flask import Flask, render_template, request
 from EmotionDetection import emotion_detector
 
-app = Flask(__name__)
+# Tell Flask where templates and static files are (at repo root, not relative to server.py)
+app = Flask(__name__, 
+            template_folder=os.path.join(REPO_ROOT, 'templates'),
+            static_folder=os.path.join(REPO_ROOT, 'static'))
 
 
 @app.route("/")
@@ -17,17 +27,22 @@ def index() -> Any:
     return render_template("index.html")
 
 
-@app.route("/emotionDetector", methods=["POST"])
+@app.route("/emotionDetector", methods=["GET", "POST"])
 def detect_emotion() -> Any:
     """
-    Receive text via JSON or form, call emotion_detector, and return the formatted string.
-    On invalid/blank input (dominant_emotion is None), return the required error message.
+    Receive text via JSON, form, or GET query and return formatted emotion analysis.
     """
     text = ""
-    if request.is_json:
+    
+    if request.method == "GET":
+        # Handle GET request from the IBM JavaScript
+        text = (request.args.get("textToAnalyze") or "").strip()
+    elif request.is_json:
+        # Handle JSON POST
         data = request.get_json(silent=True) or {}
         text = (data.get("textToAnalyze") or "").strip()
     else:
+        # Handle form POST
         text = (request.form.get("textToAnalyze") or "").strip()
 
     result: Dict[str, Any] = emotion_detector(text)
@@ -35,7 +50,6 @@ def detect_emotion() -> Any:
     if result.get("dominant_emotion") is None:
         return "Invalid text! Please try again!"
 
-    # Specified response sentence format
     return (
         f"For the given statement, the system response is "
         f"'anger': {result.get('anger')}, "
@@ -48,6 +62,4 @@ def detect_emotion() -> Any:
 
 
 if __name__ == "__main__":
-    # Must run on localhost:5000 per the lab
     app.run(host="127.0.0.1", port=5000, debug=False)
-
