@@ -103,7 +103,7 @@ Do not move templates/ or static/; the server expects them at the repository roo
 The app calls IBM’s Watson EmotionPredict endpoint. If the API is down or blocked, the app uses fallback local analysis logic so the UI always works.
 
 Credits
-Project based on the IBM Skills Network AI Web App capstone.
-Extended with a custom cyberpunk UI and enhanced error handling by [Your Name].
+Project based on the IBM Skills Network
+Extended with a custom cyberpunk UI and enhanced error handling by Arees Manesia.
 
 Ready to use! Check out the code, launch the server, and experience advanced emotion detection with cutting-edge design.
