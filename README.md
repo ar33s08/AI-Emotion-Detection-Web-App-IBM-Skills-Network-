@@ -36,30 +36,30 @@ Git
 Quick Start
 Clone the repository
 
-bash
 git clone https://github.com/YOURUSERNAME/AI-Emotion-Detection-Web-App-IBM-Skills-Network-.git
 cd AI-Emotion-Detection-Web-App-IBM-Skills-Network-
+
 (Optional) Create and activate a virtual environment
 
-bash
 python3 -m venv .venv
 # macOS/Linux
 source .venv/bin/activate
 # Windows (Powershell)
 .venv\Scripts\Activate.ps1
+
 Install dependencies
 
-bash
 python3 -m pip install --upgrade pip
 python3 -m pip install flask requests pylint
+
 Run unit tests (recommended)
 
-bash
 python3 -m unittest final_project/test_emotion_detection.py
+
 Launch the web app
 
-bash
 python3 final_project/server.py
+
 Open the UI
 
 Go to http://localhost:5000 in your web browser.
