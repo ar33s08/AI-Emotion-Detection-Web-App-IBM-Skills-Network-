@@ -1,86 +1,109 @@
 # Repository for final project
+AI Emotion Detection Web App
+AI-powered emotion detection web application with a cyberpunk-inspired modern UI. Enter any statement and instantly see its emotional analysis, powered by IBM Watson NLP.
+
+Features
+🎨 Cyberpunk dark mode with animated neon gradient UI.
+
+⏳ Animated loading spinner to indicate real-time analysis.
+
+🧠 AI-powered emotion detection via IBM Watson EmotionPredict API.
+
+✅ Intuitive web UI and RESTful API endpoint.
+
+🛡️ Network timeout handling with demo fallback results for offline use.
+
+🔬 Unit tests for guaranteed correctness.
+
+📱 Responsive, mobile-ready design.
+
+Demo
+Input:
+I think I am having fun!
+
+Output:
+
+For the given statement, the system response is 'anger': 0.1, 'disgust': 0.05, 'fear': 0.05, 'joy': 0.8, and 'sadness': 0.0.
+The dominant emotion is joy.
+
 Prerequisites
-Python 3.9+ installed.
+Python 3.9+
 
-Internet access (the app calls the Watson EmotionPredict endpoint).
+Internet access for live Watson API (offline mode provides fallback demo analysis)
 
-1) Clone the repository
-git clone https://github.com/<your-username>/AI-Emotion-Detection-Web-App-IBM-Skills-Network-.git
+Git
 
+Quick Start
+Clone the repository
+
+bash
+git clone https://github.com/YOURUSERNAME/AI-Emotion-Detection-Web-App-IBM-Skills-Network-.git
 cd AI-Emotion-Detection-Web-App-IBM-Skills-Network-
+(Optional) Create and activate a virtual environment
 
-2) (Optional) Create and activate a virtual environment
+bash
 python3 -m venv .venv
+# macOS/Linux
+source .venv/bin/activate
+# Windows (Powershell)
+.venv\Scripts\Activate.ps1
+Install dependencies
 
-macOS/Linux: source .venv/bin/activate
-
-Windows (PowerShell): .venv\Scripts\Activate.ps1
-
-3) Install dependencies
+bash
 python3 -m pip install --upgrade pip
-
 python3 -m pip install flask requests pylint
+Run unit tests (recommended)
 
-4) Quick function smoke test (optional)
-python3
-
-from EmotionDetection import emotion_detector
-
-emotion_detector("I love this new technology.")
-
-exit()
-
-Expected: a dict with scores for anger, disgust, fear, joy, sadness, and a dominant_emotion key.
-
-5) Run unit tests (optional but recommended)
+bash
 python3 -m unittest final_project/test_emotion_detection.py
+Launch the web app
 
-Expected: all tests pass, validating dominant_emotion for five sample statements.
-
-6) Launch the web app
+bash
 python3 final_project/server.py
+Open the UI
 
-Server starts at:
+Go to http://localhost:5000 in your web browser.
 
-http://localhost:5000
+Enter any sentence (e.g., I think I am having fun) and click "Analyze Emotions".
 
-7) Use the UI
-Open the URL in a browser, enter any sentence (e.g., “I think I am having fun”), and submit.
+The result will display below with emotion scores and dominant emotion.
 
-The page returns a formatted sentence containing the five emotion scores and the dominant emotion.
+Submitting an empty input returns: Invalid text! Please try again!
 
-Submitting an empty/blank input returns: “Invalid text! Please try again!”
-
-8) API usage (direct, without the UI)
+API Usage
 Endpoint:
-
 POST http://localhost:5000/emotionDetector
 
 Send either:
 
-Form-encoded body with key textToAnalyze
+Form-encoded body: textToAnalyze=Your text here
 
-or JSON body: {"textToAnalyze": "Your text here"}
+JSON: {"textToAnalyze": "Your text here"}
 
+Example cURL:
+
+bash
+curl -X POST -F "textToAnalyze=I think I am having fun" http://localhost:5000/emotionDetector
 Response:
 
-On success: a plain-text sentence with 'anger', 'disgust', 'fear', 'joy', 'sadness' and the dominant emotion.
+On success: a plain-text sentence with anger, disgust, fear, joy, sadness scores and the dominant emotion.
 
-On invalid/blank text: “Invalid text! Please try again!”
+On invalid/blank: "Invalid text! Please try again!"
 
-cURL examples:
+Customization
+UI Theme: All CSS and design in templates/index.html.
 
-curl -X POST -F "textToAnalyze=I think I am having fun" http://localhost:5000/emotionDetector
+Backend logic: All emotion detection in final_project/EmotionDetection/emotion_detection.py.
 
-curl -X POST -H "Content-Type: application/json" -d '{"textToAnalyze":"I think I am having fun"}' http://localhost:5000/emotionDetector
-
-9) Linting (optional)
-python3 -m pylint final_project/server.py
-
-Aim for 10/10 by keeping docstrings and type hints; repeat for other files if desired.
+Tests: Update or expand tests in final_project/test_emotion_detection.py.
 
 Notes
 Do not move templates/ or static/; the server expects them at the repository root.
 
-The app calls IBM’s Watson EmotionPredict endpoint specified in the lab; ensure the network allows outgoing HTTPS requests.
+The app calls IBM’s Watson EmotionPredict endpoint. If the API is down or blocked, the app uses fallback local analysis logic so the UI always works.
 
+Credits
+Project based on the IBM Skills Network AI Web App capstone.
+Extended with a custom cyberpunk UI and enhanced error handling by [Your Name].
+
+Ready to use! Check out the code, launch the server, and experience advanced emotion detection with cutting-edge design.
